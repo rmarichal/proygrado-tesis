@@ -1,0 +1,38 @@
+\chapter{Conclusión y trabajo futuro}\label{ch:conclusion}
+
+En este capítulo se detallan las conclusiones más importantes inferidas a través del trabajo realizado en este proyecto de grado. Adicionalmente, se resumen algunas de las posibles líneas de trabajo futuro identificadas que permitirían extender el trabajo.
+
+\section{Conclusiones}
+El proyecto tenía por objetivo principal, como se menciona en el Capítulo~\ref{ch:intro}, avanzar en el estudio y comprensión de estrategias de optimización para el uso de matrices dispersas. Poniendo especial foco en el estudio de estrategias de almacenamiento  híbridas y explorando el uso de técnicas de reordenamiento en conjunto con la aplicación de estrategias de precisiones reducidas.
+Teniendo en cuenta el objetivo planteado, se desprenden los siguientes objetivos específicos: 
+(i) Realizar una actualización del estado del arte del uso de matrices dispersas;
+(ii) Actualizar el estado del arte del uso de computación de alta performance (HPC) y en especial, su uso para acelerar la resolución de problemas de álgebra lineal numérica (ALN) dispersa;
+(iii) Estudiar estrategias de almacenamiento para matrices dispersas, que apliquen técnicas híbridas, reordenamientos y el uso de múltiples precisiones;
+(iv) En base a lo relevado, desarrollar estrategias (formatos, procedimientos, etc.) para matrices dispersas que permitan alcanzar un uso más eficiente de los datos/cómputo.
+
+En primera instancia, se destaca que la ejecución del proyecto permitió cumplir con los objetivos originalmente planteados. En particular, se realizó un relevamiento del estado del arte del uso de matrices dispersas, describiendo varios de los formatos de almacenamiento más conocidos y usados. También se conceptualizó una breve explicación de algunas de las estrategias de reordenamiento más extendidas a la hora de trabajar con matrices dispersas. 
+En el mismo marco teórico, se analizó el uso de arquitecturas de HPC y su aplicación para acelerar la resolución de problemas de ALN dispersa, comentando las principales dificultades de operar con este tipo de matrices, y motivando así el estudio de formatos que permitan operar de forma eficiente. 
+También se avanzó en la actualización del estado del arte centrado en las técnicas para almacenar y operar con matrices dispersas. Especialmente, aplicando diferentes estrategias que, buscando optimizar ciertos aspectos al operar, trabajan tanto sobre los índices de la matriz, el orden de las filas y columnas, o con los coeficientes de éstas. Como conclusión de esta etapa, se puede destacar que, la gran mayoría de las investigaciones relevadas, tienen su foco en una operación en particular, la SpMV. Y también muchas de ellas están enfocadas en optimizaciones para alguna arquitectura de hardware específica. Se puede notar también que, una cantidad importante de estas investigaciones aplican reordenamientos, ya sea para optimizar cierta propiedad antes de almacenar la matriz, o directamente sobre el formato disperso planteado (por ejemplo para mejorar los accesos a memoria), dejando en claro la importancia de este tipo de enfoques. Se resalta también, que otro conjunto importante de investigaciones buscan disminuir el tráfico de datos entre los distintos niveles de la jerarquía de memoria mediante la reducción de la precisión utilizada, tanto en lo referido a los coeficientes como los índices.
+
+En cuanto al foco principal del trabajo, se proponen y evalúan, en primera instancia, diferentes estrategias para reordenar matrices utilizando heurísticas. En particular, se desarrollaron algoritmos evolutivos, teniendo por objetivo encontrar reordenamientos que permitan explotar técnicas de compresión para lograr un uso eficiente de memoria. Entre los resultados más interesantes que se obtuvieron se puede destacar que, al intentar minimizar la cantidad de diagonales con el algoritmo evolutivo planteado, se logra optimizar también el ancho de banda de la matriz, incluso más que el algoritmo que tenía esta medida por función objetivo.
+
+Por otro lado, se realizó un estudio y discusión sobre los posibles ahorros de memoria al intentar comprimir los índices. Específicamente, se comparan distintas técnicas que explotan el almacenamiento de índices con diferentes precisiones. Para la evaluación experimental se emplean las matrices dispersas, con patrón simétrico, de la colección SSMC, siguiendo un procedimiento sistemático sobre todo el conjunto de prueba y los métodos a evaluar. Este estudio evidencia que, para una gran cantidad de problemas, el abordaje de estos enfoques ofrece importantes mejoras. 
+Entre otros resultados se destacan los beneficios al aplicar técnicas alternativas para almacenar los índices, como son el \textit{delta encoding} y la diferencia a la diagonal. Estas mejoras se ven incrementadas si se combinan con la aplicación de las estrategias de reordenamiento, por ejemplo mediante la heurística RCM.
+
+En cuanto a los resultados obtenidos en la evaluación experimental, es necesario enfatizar las importantes reducciones en los requerimientos de almacenamiento alcanzadas. Obteniendo que, en promedio, entre todas las técnicas que no aplican reordenamientos, un 61\% de las matrices analizadas pueden ser almacenadas con 16 bits (entre 9 y 16), y un 16\% pueden ser almacenadas con 8 bits. 
+Como aspecto negativo, entre las matrices que requieren 32 bits, no se identifican tendencias que permitan avanzar con el uso parcial de precisiones menores, es decir no hay un número grande de filas que puedan ser almacenadas con una cantidad menor de bits.
+%en el espacio de matrices que no admitieron una reducción de precisión (las que pertenecen a la categoría de 32 bits), presente en cada estrategia abordada, es que los índices resultantes quedan clasificados sin lograr una tendencia clara a, por ejemplo, una baja cantidad en 32 bits. Dificultando la posibilidad de intentar trabajar con estrategias híbridas  buscando almacenar la matriz con dos componentes, una con la mayoría de elementos no nulos con precisiones reducidas y los restantes en otra componente con la precisión necesaria. 
+Por último, y especialmente destacado, la aplicación de técnicas de reordenamientos, incluso con heurísticas no diseñados para optimizar los parámetros estudiados, ofrecen una importante mejora de las técnicas evaluadas.
+En este caso el promedio de las matrices que pueden ser almacenadas con 16 bits sube a 64\% y a 30\% las que se pueden almacenar con 8 bits.
+
+
+
+\section{Trabajo futuro}
+El desarrollo de este trabajo permitió avanzar en la comprensión de distintas líneas de investigación relacionadas con el almacenamiento de matrices dispersas.
+No obstante, existen ciertos puntos importantes vinculados al objetivo del proyecto que, debido al alcance y tiempo, no pudieron se abordados.
+A continuación, se detallan algunas de estas ideas que podrían extender el proyecto como trabajo futuro: 
+\begin{itemize}
+    \item Una línea interesante es desarrollar algoritmos y heurísticas que permitan acercarse más, en cuanto a costos computacionales razonables, a soluciones como las obtenidas por el algoritmo evolutivo de la Sección~\ref{sec:ae}.
+    \item Otro aspecto prometedor es implementar y evaluar operaciones matriciales utilizando los formatos propuestos, en particular, para alguna arquitectura de hardware de interés científico.
+    \item Por último, sería importante implementar una biblioteca de ALN dispersa capaz de manipular matrices almacenadas con los formatos abordados, operar sobre ellas y así poder estudiar en mayor profundidad los beneficios de estos paradigmas.
+\end{itemize}

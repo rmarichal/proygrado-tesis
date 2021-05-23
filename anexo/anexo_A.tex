@@ -1,0 +1,73 @@
+\chapter{Algoritmo evolutivos}\label{Ane1}
+
+En la computación científica se pueden encontrar numerosos problemas con diferentes complejidades. De forma genérica, estos pueden ser clasificados como problemas ``sencillos'' y problemas ``difíciles''. Esta clasificación depende de la evaluación de la complejidad de los algoritmos capaces de resolver los problemas en diferentes casos.
+Formalmente un problema es ``sencillo'', si puede ser resuelto en tiempo polinomial en una computadora determinística. A este tipo de problemas se los llama de clase $\mathcal{P}$. Un problema ``difícil'' o que pertenece a la clase $\mathcal{NP}$,  es aquel que puede ser resuelto en tiempo polinomial pero en una computadora no determinística. (Estos problemas una vez obtenida la solución, son fáciles de verificar, pero difíciles de encontrar.)
+En 1971 se planteó la pregunta  ¿si $\mathcal{P}$=$\mathcal{NP}$?  Al día de hoy no se ha podido demostrar si se cumple, se cree que $\mathcal{P} \neq \mathcal{NP}$, siendo uno de los principales desafíos en el campo de la computación.
+
+Problemas $\mathcal{NP}$, son la clase de problemas ``difíciles'' de resolver. Un ejemplo muy común y conocido es el ``Travelling Salesperson Problem'' (TSP) . Este consiste, básicamente, en encontrar un una permutación que represente el recorrido de una serie de ciudades (vértices) conectadas entre si (aristas), de tal forma que todas sean visitadas (sólo una vez), minimizando la distancia total viajada.  A continuación, con el objetivo de observar cuan difícil puede ser resolver este problema de manera óptima. Considerando n ciudades, la dimensión del espacio de búsqueda    (permutaciones) es: $(n-1)!/2$, entonces:
+\begin{itemize}
+	\item Para $n=10$, hay 181.440 permutaciones posibles.
+	\item Para $n=12$ hay 19.958.400 permutaciones posibles.
+	\item Para $n=20$ hay 60.822.550.204.416.000 permutaciones posibles.
+\end{itemize}
+
+Estos ejemplos evidencian de forma clara, la inviabilidad de buscar una solución por fuerza bruta o una búsqueda exhaustiva.
+Entonces, para este tipo de problemas, es necesario utilizar algoritmos de resolución más eficientes que la búsqueda exhaustiva. 
+
+Una clase particular de problemas $\mathcal{NP}$ son los problemas de optimización, los que tienen por objetivo hallar la(s) solucione(s) óptima(s) de un problema (de acuerdo a una función objetivo determinada).  
+
+Existen varias técnicas para ``resolver'' estos problemas, entre ellas: analíticas, métodos exactos (backtracking, programación dinámica, método simplex, etc.), métodos de aproximación, métodos aleatorios y las que se describen con más profundidas en esta sección, heurísticas y metaheurísticas. 
+Las heurísticas son métodos de resolución basados en procedimientos conceptualmente simples para encontrar soluciones de buena calidad (no necesariamente hallan la solución óptima) a problemas difíciles, de un modo sencillo y eficiente.
+
+Entonces, por ejemplo, el problema de reordenar una matriz de modo de reducir el ancho de banda (u otra formulación donde se busca la cantidad mínima de diagonales) interpretando la matriz como una matriz de adyacencia, i.e. encontrar un reordenamiento que cumpla lo esperado, es equivalente al problema de dar una permutación de los vértices del grafo asociado a la matriz, de forma de minimizar la función ancho de banda. Como prueba Papadimitriou~\cite{Papadimitriou1976} y discutido brevemente en la Sección~\ref{sec:reordenamientos}, este es un problema $\mathcal{NP}$-completo.
+
+La computación evolutiva engloba un amplio conjunto de técnicas que siguen un mecanismo análogo a los procesos de evolución natural, permite resolver problemas ``difíciles'', similares al planteado, en tiempos y costos computacionales razonables.
+
+\begin{algorithm}[ht]
+\begin{minted}{python}
+Inicializar(P(0));
+generacion = 0;
+mientras (no CriterioParada) hacer
+    Evaluar(P(generacion));
+    Padres = Seleccionar(P(generacion));
+    Hijos = Aplicar Operadores Evolutivos(Padres);
+    NuevaPoblacion = Remplazar(Hijos,P(generacion));
+    generacion++;
+    P(generacion) = NuevaPoblacion;
+fin
+retornar Mejor Solucion Encontrada
+\end{minted}
+\caption{Esquema genérico de un AE que trabaja sobre una población $P$}
+\label{alg:ae-alg}
+\end{algorithm}
+
+Un Algoritmo Evolutivo (AE) trabaja sobre una población ($P$) de individuos que representan potenciales soluciones al problema a resolver. En el Algoritmo~\ref{alg:ae-alg} se presenta un esquema general en alto nivel de como trabaja un AE. Formalmente, la representación del individuo es el genotipo, la solución el fenotipo. Otro concepto importante presente en estos algoritmos, es una función de \textit{fitness}, que evalúa los individuos de acuerdo a su adaptación para la resolución del problema.
+
+
+La estructura general de un AE consiste en un ciclo que conformado por cuatro etapas. 
+\begin{enumerate}
+    \item \textbf{Evaluación}: se asigna un valor de \textit{fitness} a cada individuo.
+    \item \textbf{Selección}: se determinan candidatos adecuados para la generación de la nueva generación.
+    \item \textbf{Aplicación de los operadores evolutivos}: se genera un conjunto de descendientes a partir de los individuos seleccionados, mediante operadores que emulan la evolución natural.
+    \item \textbf{Reemplazo}: mecanismo que realiza el recambio generacional.
+\end{enumerate}
+
+La población $P$ es inicializada, en general, mediante mecanismos aleatorios o guiado por heurísticas específicas.
+La aplicación de distintas políticas de selección y reemplazo permiten definir las características del algoritmo evolutivo. Mediante la evaluación de la población basados en su valor de \textit{fitmess} se puede privilegiar los individuos más adaptados (elitismo), aumentar la presión selectiva, incrementar la diversidad genética, etc. Los operadores evolutivos determinan el mecanismo de exploración del espacio de búsqueda del problema, probablemente los más conocidos son los operadores de mutación y recombinación, la utilización de estos establece el tipo de AE. 
+Finalmente, la condición de parada determina la finalización del AE, que puede estar basada en el número de generaciones, variación de valores de fitness, estimaciones del error cometido, entre otras.
+
+
+% Primero inicializar una población de individuos (generación 0), posteriormente evaluarla con la función \textit{fitness} definida. En cada generación se seleccionan los individuos progenitores (los más aptos) y se efectúa el cruzamiento (\textit{crossover}) generando nuevos individuos, llamados hijos. A los hijos, con cierta probabilidad (\texttt{mutation rate}) se les aplica un operador de mutación (\textit{mutation}), que permite la exploración de diferentes secciones del espacio de búsqueda. Si se utiliza un muestreo apicando un remplazo generacional, además de una selección elitista, posteriormente los hijos remplazan a sus progenitores para formar la población de la siguiente generación, y a medida que transcurren las generaciones, se va guardando al individuo más apto según la función \texttt{fitness}. Esto continúa hasta completar una cantidad máxima de generaciones o hasta que se logra cierta condición de parada.
+
+% Este objetivo, modelado por el concepto llamado función \textit{fitness}, es fácilmente modificable intercambiando la dicha función y así obtener permutaciones con otras metas.
+
+% Hasta ahora, se introdujeron directa e indirectamente varios conceptos de importancia en los algoritmos genéticos. Se habló del vector de permutaciones $p$ el cromosoma?, cantidad de diagonales, función fitness. Además de estos, son necesarios otros componentes para definir de forma completa y correcta el algoritmo genético. En otras palabras, a la hora de mapear un problema a un algoritmo genético, se tienen que definir los siguientes componentes:
+% \begin{itemize}
+%     \item función \textit{fitness}
+%     \item cromosoma o individuo
+%     \item mutación mutation
+%     \item cruzamiento crossover
+%     \item population
+%     \item mutation rate
+%     \item generations
+% \end{itemize}

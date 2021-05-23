@@ -1,0 +1,55 @@
+\chapter{Evolución GPUs}\label{AneB}
+
+En la Sección \ref{gpu-history} se estudió la evolución de las GPUs desde el punto de vista para el que fueron concebidas en un principio, que era el procesamiento gráfico, sin entrar en detalles muy específicos de cada dispositivo. La arquitectura, bastante consolidada, fue la base de las posteriores generaciones o familias de GPUs que fueron apareciendo en las últimas dos décadas. A continuación se revisa de forma breve, la evolución de las GPUs desde un enfoque arquitectónico de las familias propuestas por NVIDIA, desde Tesla hasta Ampere.
+
+Antes de las arquitecturas unificadas, como se explicó en la  sección anterior, el diseño de las GPUs y sus unidades de cómputo estaban directamente relacionadas con la interfaz de renderizado y despliegue de gráficos. Un ejemplo antes de la llegada de las Tesla, es la GeForce 7900 GTX. Esta tarjeta estaba diseñada básicamente en tres secciones, la primera dedicada al procesamiento de vértices (8 unidades de vertex shaders), 24 fragment shaders y 16 unidades de fragment merging. Este diseño forzaba a tener que estudiar en cuales de las etapas se daban los cuellos de botella de la arquitectura, así lograr cierto equilibro entre las capas. Notar que esta arquitectura es difícilmente escalable.
+
+En cuanto a las aquitecturas de GPUs de NVIDIA, de la era de CUDA, a continuación se detallan las principales características que marcaron y destacaron en cada generación.
+
+\subsubsection*{Tesla}
+Entonces NVIDIA resuelve el problema de escalabilidad proponiendo la arquitectura ``unificada'' Tesla. Comparada con las arquitecturas anteriores, ya no hay distinción de capas. Estas son sustituidas por el Stream Multiprocessor (SM), dotado con la capacidad de ejecutar todas las etapas, tareas de vertex, fragment y geometry, sin distinción.
+
+
+\subsubsection*{Fermi}
+
+\subsubsection*{Kepler}
+
+\subsubsection*{Maxwell}
+
+\subsubsection*{Pascal}
+
+\subsubsection*{Turing}
+
+ 
+
+
+
+
+
+
+
+
+
+
+\begin{table}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|l|l|l|l|l|} \hline
+Año  & Arquitectura & Serie       & Chip   & Dimensión & GPU más representativa  \\\hline \hline
+2006 & Tesla        & GeForce 8   & G80   & 90 nm               & 8800 GTX                    \\\hline
+2010 & Fermi        & GeForce 400 & GF100 & 40 nm               & GTX 480                     \\\hline
+2012 & Kepler       & GeForce 600 & GK104 & 28 nm               & GTX 680                     \\\hline
+2014 & Maxwell      & GeForce 900 & GM204 & 28 nm               & GTX 980 Ti                  \\\hline
+2016 & Pascal       & GeForce 10  & GP102 & 16 nm               & GTX 1080 Ti                 \\\hline
+2018 & Turing       & GeForce 20  & TU102 & 12 nm               & RTX 2080 Ti \\ \hline
+\end{tabular}
+}
+\caption{Diferencias en la arquitectura de las diferentes generaciones de GPUs presentadas por NVIDIA.}\label{tab:gpus-family}
+\end{table}
+
+
+% \subsection{Uso de las GPUs para ALN dispersa}
+
+% Multiplicación matriz vector. Revisar 
+
+% Que mas? De cuSPARSE??

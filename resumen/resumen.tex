@@ -1,0 +1,11 @@
+\begin{abstract}
+Las matrices dispersas tienen múltiples aplicaciones en el ámbito de la ciencia y la ingeniería, ya que son una herramienta fundamental para la resolución de problemas de gran escala que no pueden ser modelados por matrices densas como, por ejemplo, las simulaciones de circuitos electrónicos, la resolución de ecuaciones diferenciales parciales utilizando FEM, o incluso operaciones con grafos de redes sociales. La creciente importancia de las matrices dispersas para la comunidad científica motiva el estudio de técnicas que permitan el manejo eficiente, tanto del almacenamiento como del cómputo de las operaciones asociadas con este tipo de matrices.
+En general, estas técnicas buscan reducir el tráfico de datos con la memoria principal mediante formatos de almacenamiento que permitan ubicar los elementos no nulos dentro de la matriz transfiriendo la menor cantidad de datos posibles.
+
+% Considerando lo expresado anteriormente, 
+El objetivo principal de este proyecto es avanzar en el estudio y comprensión de estas estrategias. En particular, se evalúan estrategias de particionamiento y procesamiento de matrices para el uso eficiente de técnicas de almacenamiento centradas, principalmente, en la aplicación de reordenamientos, el uso de múltiples precisiones para almacenar los índices de los elementos no nulos y formatos híbridos que permitan almacenar la matriz mediante una parte regular, en general densa, y una parte irregular dispersa. El trabajo incluye, en primer lugar, la actualización del estado del arte respecto a formatos de almacenamiento disperso. Luego se  desarrollaron un conjunto  de heurísticas que tienen por objetivo optimizar el espacio de almacenamiento de las matrices dispersas mediante el particionamiento de las mismas, alcanzando resultados alentadores.
+Por último, se extendió la evaluación experimental midiendo el impacto de la compresión de índices luego de aplicar los reordenamientos.
+Este estudio permitió identificar los importantes ahorros en cuanto a espacio de almacenamiento que se pueden obtener al comprimir índices y, además, resaltó la importancia de combinar estrategias de reordenamiento para dicha tarea.
+
+\end{abstract}
+

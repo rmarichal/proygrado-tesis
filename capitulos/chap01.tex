@@ -1,0 +1,55 @@
+\chapter{Introducción}\label{ch:intro}
+
+% \resumen{Motivación}
+
+Las matrices dispersas son aquellas que poseen una fracción relativamente pequeña (frecuentemente muy menor al 1\%) de sus coeficientes distintos a cero, lo que motiva el uso de estructuras de almacenamiento que aprovechen esta particularidad. Específicamente, se suelen almacenar únicamente los coeficientes distintos de cero, acompañados por índices que permitan deducir sus coordenadas en la matriz. Su importancia en el ámbito de la ciencia y la ingeniería radica en que son una herramienta fundamental para la resolución de problemas de gran escala que no pueden ser modelados por matrices densas, por ejemplo, algunos problemas de optimización~\cite{Gill1984} o la resolución de ecuaciones diferenciales parciales utilizando el Método de Elementos Finitos (o FEM por Finite Element Method)~\cite{Saad2003}. Los FEMs~\cite{klaus-jürgenbathe2014} permiten resolver ecuaciones diferenciales asociadas a un problema físico sobre geometrías complicadas (por ejemplo \cite{audi-piston-rod}). Son usados en el diseño y mejora de productos y aplicaciones industriales, así como en la simulación de sistemas físicos y biológicos complejos. La variedad de problemas a los que puede aplicarse ha crecido enormemente, siendo el requisito básico que las ecuaciones constitutivas y ecuaciones de evolución temporal del problema sean conocidas de antemano, representadas comúnmente a la hora de resolverlas como matrices dispersas. Una completa revisión del uso de matrices dispersas en la computación científica, en las etapas tempranas de desarrollo, hasta el año 1977, se puede encontrar en el trabajo de I. Duff~\cite{Duff1977}.
+
+En los últimos años, las matrices dispersas han ido cobrando cada vez más relevancia en el campo de la computación científica, debido, por ejemplo, al impulso del crecimiento de las aplicaciones relacionadas con las redes sociales. En este contexto, las matrices representan, en general, un grafo de las relaciones entre los diferentes usuarios, tal como se presenta en \cite{Hummon1990}, alcanzando matrices de dimensiones extraordinariamente grandes y, al mismo tiempo, con muy pocos coeficientes no nulos.
+
+
+Esta evolución, descrita en los párrafos anteriores, motiva el estudio de técnicas eficientes, tanto desde el punto de vista del almacenamiento como del cómputo de las operaciones asociadas a las matrices dispersas. 
+% Además, considerando la diversidad de problemas donde se usan estas estructuras de datos, las características de las matrices son muy diferentes. Esta situación dificulta aún más avanzar en dicho desarrollo.
+Dado que las características de estas matrices, como pueden ser su tamaño, la proporción de elementos distintos de cero o la posición de los mismos, varían fuertemente según la aplicación, esta área de trabajo se encuentra aún en constante desarrollo.
+
+
+Uno de los principales desafíos que presentan los problemas con matrices dispersas (a través de operaciones como la multiplicación matriz dispersa-vector -SpMV-) es que, en su gran mayoría, son inherentemente limitados por los accesos a memoria, por lo que mejorar la forma de almacenar las matrices para optimizar las comunicaciones de datos entre la memoria y el procesador es crucial. En este caso, suelen ser útiles las técnicas de ordenamiento que permiten reorganizar los coeficientes no nulos de la matriz de forma que éstos puedan almacenarse de manera más eficiente. Otra de las ideas interesantes que apuntan a optimizar el trabajo con matrices dispersas, son aquellas que intentan reducir la precisión de los elementos almacenados, reduciendo las comunicaciones con la memoria. Hartwig Anzt et al.~\cite{Grtzmacher2019}, por ejemplo, presenta estrategias enfocadas en almacenar los coeficientes en punto flotante de precisión adaptable. Sin embargo, parte importante de las comunicaciones en problemas dispersos están dedicadas al manejo de los índices que permiten direccionar dichos coeficientes. Por este motivo es interesante explorar técnicas que permitan, al menos para ciertos tipos de matriz dispersa, almacenar dichos índices de una forma más eficiente. Algunos de los esfuerzos se centran en lograr comprimirlos, aplicando codificaciones distintas, por ejemplo, el delta encoding~\cite{smith1997}. Otros intentan agrupar elementos contiguos y direccionarlos con un índice. Como último punto, presenta un gran interés el hecho de combinar las estrategias antes mencionadas, estudiando la aplicación de ordenamientos  con una posterior compresión de índices.
+
+
+En el contexto descrito anteriormente, el objetivo de este proyecto es avanzar en el estudio y comprensión de estrategias de optimización de uso de matrices dispersas. En particular, se busca evaluar estrategias de particionamiento y procesamiento de matrices para el uso eficiente de técnicas de almacenamiento. Para alcanzar el objetivo general del proyecto se plantean los siguientes objetivos específicos: 
+\begin{itemize}
+    \item Actualizar el estado del arte del uso de matrices dispersas.
+    \item Actualizar el estado del arte del uso de computación de alta performance (HPC) y en especial, su uso para acelerar la resolución de problemas de álgebra lineal numérica (ALN) dispersa.
+    \item Estudiar las técnicas híbridas, reordenamientos y el uso de múltiples precisiones para matrices dispersas.
+    \item Desarrollar estrategias (formatos, procedimientos, etc.) para matrices dispersas que permitan alcanzar un uso más eficiente de los datos/cómputo.
+\end{itemize}
+
+El resto del documento se estructura de la forma que se describe a continuación.
+El Capítulo \ref{ch:fundamento-teorico} presenta, de forma acotada, los conceptos y la teoría en la que está basada este proyecto. Entre otros temas, se aportan detalles sobre matrices dispersas, la multiplicación Matriz dispersa-Vector (SpMV), estrategias de reordenamiento de matrices y hardware para HPC.
+En el Capítulo~\ref{ch:estado-del-arte} se resumen los principales antecedentes relacionados con el uso de formatos de almacenamiento de matrices dispersas, el uso de múltiples precisiones y las técnicas de reordenamiento de matrices asociadas.
+Posteriormente, en el Capítulo~\ref{ch:propuestas}, se presentan los esfuerzos realizados en el contexto del proyecto de grado. Esto incluye el estudio de técnicas de reordenamiento para formatos híbridos y la evaluación de técnicas de múltiples precisiones. 
+El documento se cierra con un resumen de las conclusiones arribadas durante el desarrollo del proyecto y la identificación de líneas de trabajo para continuar el esfuerzo en el Capítulo~\ref{ch:conclusion}.
+
+
+% Este material busca ser un apoyo a quienes escriben sus tesis en los distintos servicios en las diversas disciplinas que se cultivan en la \gls{UDELAR}. Este texto ofrece una guía para la presentación de tesis de maestría y doctorado\footnote{A continuación se presenta una caracterización de estos trabajos, de acuerdo con lo estipulado en los artículos correspondientes de la Ordenanza de las Carreras de Posgrado$^1$, aprobada por el CDC en setiembre de 2001: Art 17 - Las carreras de maestría tienen por objetivo proporcionar una formación superior a 	la del graduado universitario, en un campo del conocimiento. Dicho objetivo se logrará 	profundizando la formación teórica, el conocimiento actualizado y especializado en ese 	campo, y de sus métodos; estimulando el aprendizaje autónomo y la iniciativa personal, e incluyendo la preparación de una tesis o trabajo creativo finales. 
+
+% \begin{minipage}{0.973\textwidth}
+% Art. 23 - Por Tesis, se entenderá un trabajo que demuestre por parte del aspirante, haber 	alcanzado el estado actual del conocimiento y competencia conceptual y metodológica.
+	
+% 	Art. 26 - Las carreras de doctorado constituyen el nivel superior de formación de posgrado 	en un área del conocimiento. Su objetivo es asegurar la capacidad de acompañar la 	evolución del área de conocimiento correspondiente, una formación amplia y profunda en el 	área elegida, y la capacidad probada para desarrollar investigación original propia y creación 	de nuevo conocimiento.
+% \end{minipage}	 
+% }. Provee elementos para unificar cuestiones de estructura y formato del género tesis. Esta Guía tiene dos materiales complementarios que proporcionan modelos informáticos del procesamiento textual para cada una de las partes de la tesis.
+
+
+% La información  recogida en esta Guía surge de los talleres de escritura así como también de material bibliográfico\footnote{Dentro del material bilbiográfico se referencian aquí unos pocos a modo de ejemplo, estando los demás incluidos en la guía, como ser: \cite{guia1}, \cite{guia2} y \cite{guia4}.} específico en escritura académica, que reinterpretamos de manera amplia con el fin de tener en cuenta las distintas tradiciones y servicios de la \gls{UDELAR}. 
+
+% Esta guía se estructura de la siguiente manera: 
+
+
+% \begin{itemize}
+% \item	\underline{elementos pretextuales:} aquellos que anteceden al cuerpo del texto en la tesis.
+% \item	\underline{elementos textuales:} cuerpo del texto en el que se expone el tema investigado. 
+% \item	\underline{elementos postextuales:} aquellos que están a continuación del cuerpo del texto.
+% \end{itemize}
+
+
+\newpage
